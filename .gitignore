@@ -1,0 +1,13 @@
+# Erlang/OTP
+*.beam
+*.ez
+erl_crash.dump
+log/
+# Erlang.mk
+.erlang.mk
+erlang.mk
+deps/
+_build/
+rebar.config.script
+# Advent of Code specific
+/inputs

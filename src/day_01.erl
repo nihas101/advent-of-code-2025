@@ -8,7 +8,7 @@ parse(Input) ->
     Lines = string:split(Input, "\n", all),
     TrimmedLines = lists:map(fun string:trim/1, Lines),
     NonEmptyLines = lists:filter(fun(X) -> length(X) > 0 end, TrimmedLines),
-    lists:map(fun([Dir|Dist]) -> {rot, Dir, erlang:list_to_integer(Dist)} end, NonEmptyLines).
+    lists:map(fun([Dir|Dist]) -> {rot, Dir, list_to_integer(Dist)} end, NonEmptyLines).
 
 next(CurrentAbs, {rot, $R, Dist}) -> CurrentAbs + Dist;
 next(CurrentAbs, {rot, $L, Dist}) -> CurrentAbs - Dist.

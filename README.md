@@ -29,7 +29,10 @@ make shell
 Then, from within the shell, you can call the functions for each day. For example, to run day 1, part 1:
 
 ```erlang
-day_01:part1("your_input_here").
+% To pass a string directly
+day_01:part1({string, "your_input_here"}).
+% To read the input from a file
+day_01:part1({file, "path/to/input.txt"}).
 ```
 
 ## Running the tests

@@ -20,16 +20,14 @@ parse(Input) ->
     [FreshIdRanges, Ids] = string:split(Input, "\n\n", all),
     {database, parseRanges(FreshIdRanges), parseIds(Ids)}.
 
-% This is not perfect, but good enough I guess.
-% Basing the iterations on the initial length means
-% we can 'overshoot' and do unnecessary iterations
 join_ranges([H|T] = FreshIdRanges) -> join_ranges(FreshIdRanges, join(H, T, []), length(FreshIdRanges)).
 join_ranges(FreshIdRanges, [H|T] = JoinedRanges, 0) when length(FreshIdRanges) /= length(JoinedRanges) ->
     join_ranges(JoinedRanges, join(H, T, []), length(JoinedRanges));
 join_ranges(FreshIdRanges, JoinedRanges, 0) when length(FreshIdRanges) == length(JoinedRanges) ->
     FreshIdRanges;
 join_ranges(_, [H|T] = JoinedRanges, X) ->
-    join_ranges(JoinedRanges, join(H, T, []), X-1).
+    Joined = join(H, T, []),
+    join_ranges(JoinedRanges, Joined, min(X-1, length(Joined))).
 
 join(P, [], Output) -> Output ++ [P];
 join({range, A, B}, [{range, X, Y}|Ranges], Output) when A =< X, X =< B, A =< Y, Y =< B ->

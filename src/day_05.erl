@@ -1,24 +1,24 @@
 -module(day_05).
 -export([part1/1, part2/1]).
 
-parseRange(Range) ->
+parse_range(Range) ->
     [A, B] = string:split(Range, "-", all),
     {range, list_to_integer(A), list_to_integer(B)}.
 
-splitLines(Lines) ->
+split_lines(Lines) ->
     SplitLines = string:split(Lines, "\n", all),
     TrimmedLines = [string:trim(X) || X <- SplitLines],
     lists:filter(fun(X) -> length(X) > 0 end, TrimmedLines).
 
-parseRanges(Ranges) ->
-    [parseRange(X) || X <- splitLines(Ranges)].
+parse_ranges(Ranges) ->
+    [parse_range(X) || X <- split_lines(Ranges)].
 
-parseIds(Ids) ->
-    [list_to_integer(X) || X <- splitLines(Ids)].
+parse_ids(Ids) ->
+    [list_to_integer(X) || X <- split_lines(Ids)].
 
 parse(Input) ->
     [FreshIdRanges, Ids] = string:split(Input, "\n\n", all),
-    {database, parseRanges(FreshIdRanges), parseIds(Ids)}.
+    {database, parse_ranges(FreshIdRanges), parse_ids(Ids)}.
 
 join_ranges([H|T] = FreshIdRanges) -> join_ranges(FreshIdRanges, join(H, T, []), length(FreshIdRanges)).
 join_ranges(FreshIdRanges, [H|T] = JoinedRanges, 0) when length(FreshIdRanges) /= length(JoinedRanges) ->

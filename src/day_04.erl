@@ -1,20 +1,20 @@
 -module(day_04).
 -export([part1/1, part2/1]).
 
-parseLine([], _, _, Paper) -> Paper;
-parseLine([$@|T], X, Y, Paper) ->
-    parseLine(T, X+1, Y, Paper ++ [{pos, X, Y}]);
-parseLine([$.|T], X, Y, Paper) -> parseLine(T, X+1, Y, Paper).
+parse_line([], _, _, Paper) -> Paper;
+parse_line([$@|T], X, Y, Paper) ->
+    parse_line(T, X+1, Y, Paper ++ [{pos, X, Y}]);
+parse_line([$.|T], X, Y, Paper) -> parse_line(T, X+1, Y, Paper).
 
-parseLines([], _, Paper) -> Paper;
-parseLines([L|Ls], Y, Paper) ->
-    parseLines(Ls, Y+1, Paper ++ parseLine(L, 0, Y, [])).
+parse_lines([], _, Paper) -> Paper;
+parse_lines([L|Ls], Y, Paper) ->
+    parse_lines(Ls, Y+1, Paper ++ parse_line(L, 0, Y, [])).
 
 parse(Input) ->
     Lines = string:split(Input, "\n", all),
     TrimmedLines = lists:map(fun string:trim/1, Lines),
     NonEmptyLines = lists:filter(fun(X) -> length(X) > 0 end, TrimmedLines),
-    parseLines(NonEmptyLines, 0, []).
+    parse_lines(NonEmptyLines, 0, []).
 
 neighbours({pos, X, Y}) ->
     [

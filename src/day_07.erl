@@ -51,7 +51,7 @@ calculate_new_beams({{_, XX, _}, TimelineValue}, Beams) ->
 
 calculate_timelines(Beams, MaxYPos, MaxYPos, _) -> Beams;
 calculate_timelines(Beams, Y, MaxYPos, Splitters) ->
-    RelevantSplitters = lists:filter(fun({_, XX, YY}) -> (YY == Y) and maps:is_key(XX, Beams) end, Splitters),
+    RelevantSplitters = lists:filter(fun({_, XX, YY}) -> (YY == Y) andalso maps:is_key(XX, Beams) end, Splitters),
     Timelines = lists:map(fun({_, XX, _}) -> maps:get(XX, Beams) end, RelevantSplitters),
     BeamsRemoved = lists:foldl(fun({_, XX, _}, M) -> maps:remove(XX, M) end, Beams, RelevantSplitters),
     NewBeams = lists:foldl(fun calculate_new_beams/2, BeamsRemoved, lists:zip(RelevantSplitters, Timelines)),

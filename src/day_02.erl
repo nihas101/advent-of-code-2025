@@ -26,7 +26,7 @@ repeated_digits(Digits, Split) when length(Digits) rem Split == 0 ->
     [Chunk|_] = Chunks = chunk(Digits, Split, []),
     Heads = lists:map(fun([H|_]) -> H end, Chunks),
     LeadingZeroes = lists:any(fun(H) -> H == $0 end, Heads),
-    not LeadingZeroes and lists:all(fun(C) -> C == Chunk end, Chunks);
+    not LeadingZeroes andalso lists:all(fun(C) -> C == Chunk end, Chunks);
 repeated_digits(_, _) -> false.
 
 part1({file, Input}) ->
